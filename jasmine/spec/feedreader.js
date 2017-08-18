@@ -126,7 +126,7 @@ $(function() {
         });
         
         //we expect the conent to change so before != after
-        it('contents is changed' function(done) {
+        it('contents is changed', function(done) {
            expect(before).not.toBe(after);
             done();
         });
