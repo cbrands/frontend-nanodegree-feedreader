@@ -75,28 +75,60 @@ $(function() {
         it('clicking the menu icon toggles the visibility of the menu', function() {
             let menuIconLink = $('.menu-icon-link')[0];
             
+            //click icon menu should be visible
             menuIconLink.click();
             expect(body.hasClass('menu-hidden')).toBe(false);
             
+            //click again and menu should be hidden
             menuIconLink.click();
             expect(body.hasClass('menu-hidden')).toBe(true);
         });
     });
     
     
-    /* TODO: Write a new test suite named "Initial Entries" */
-
-        /* TODO: Write a test that ensures when the loadFeed
+    /* Done: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function() {
+        
+        /* Done: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-
-    /* TODO: Write a new test suite named "New Feed Selection" */
-
-        /* TODO: Write a test that ensures when a new feed is loaded
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
+        
+        it('there is at least 1 .entry element within the .feed container', function(done) {
+           let entries = $('.feed .entry');
+            expect(entries.length).toBeGreaterThan(0);
+            done();
+        });
+    });
+    
+    /* Done: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
+        /* Done: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        let before, after;
+        
+        //loadFeed store content in before, loadfeed again and store the content in after
+        beforeEach(function(done) {
+            loadFeed(0, function() {
+                before = $('.feed')[0].innerText;
+                loadFeed(1, function() {
+                   after = $('.feed')[0].innerText;
+                    done();
+                });
+            });
+        });
+        
+        //we expect the conent to change so before != after
+        it('contents is changed' function(done) {
+           expect(before).not.toBe(after);
+            done();
+        });
+    });
 }());
